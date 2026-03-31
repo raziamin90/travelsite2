@@ -68,7 +68,7 @@ hero-travel/
 No build tools or dependencies required. Just open `index.html` in a browser.
 ```bash
 # Clone the repo
-git clone https://github.com/your-username/hero-travel.git
+git clone https://github.com/raziamin90/travelsite2.git
 
 # Open in browser
 open index.html
@@ -84,6 +84,4 @@ open index.html
 | Text Dark    | `#1a1a2e` |
 | Text Muted   | `#6c757d` |
 
-## License
 
-MIT — free to use and modify.
