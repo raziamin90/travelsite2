@@ -39,7 +39,7 @@
       <!-- Logo -->
       <a class="navbar-brand d-flex align-items-center gap-2" href="#">
         <span class="logo-icon">
-          <img src="assests\images\customlogo.jpg" alt="Logo" style="width:32px; height:32px; object-fit:contain;" />
+          <img src="assests\images\logo.svg" alt="Logo" style="width:32px; height:32px; object-fit:contain;" />
         </span>
         <span class="logo-text">Hero <span class="text-orange">Travel</span></span>
       </a>
@@ -146,7 +146,7 @@
           </div>
 
           <div class="col-12 col-md-3">
-            <button class="btn btn-orange w-100 fw-semibold">
+            <button class="btn btn-search w-100 fw-semibold">
               <i class="bi bi-search me-2"></i>Find Now
             </button>
           </div>
@@ -154,7 +154,8 @@
         </div>
       </div>
       <!-- END Search Bar -->
-
+        </div>
+      </div>
     </div>
   </section>
   <!-- END HERO -->
@@ -194,17 +195,30 @@
               Flexible booking options with free cancellation available.
             </li>
           </ul>
-          <a href="#packages" class="btn btn-orange px-4 fw-semibold">Read More</a>
+          <a href="#packages" class="btn btn-outline-orange fw-semibold px-5">Read More</a>
         </div>
 
-        <!-- Right: Image -->
+        <!-- Right: Image Carousel -->
         <div class="col-lg-6">
-          <div class="tour-img-wrapper">
-            <img
-              src="assests\images\popular tours.jpg"
-              alt="Popular Tour"
-              class="img-fluid rounded-4 shadow"
-            />
+          <div id="tourCarousel" class="carousel slide rounded-4 shadow overflow-hidden" data-bs-ride="carousel" data-bs-interval="3000">
+
+            <!-- Indicators -->
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#tourCarousel" data-bs-slide-to="0" class="active"></button>
+              <button type="button" data-bs-target="#tourCarousel" data-bs-slide-to="1"></button>
+            </div>
+
+            <!-- Slides -->
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="assests\images\Rectangle-4.jpg" class="d-block w-100 tour-carousel-img" />
+              </div>
+              <div class="carousel-item">
+                <img src="assests\images\popular tours.jpg" class="d-block w-100 tour-carousel-img" />
+              </div>          
+              
+            </div>
+
           </div>
         </div>
 
@@ -491,7 +505,7 @@
               Off-the-beaten-path adventures with expert local guides.
             </li>
           </ul>
-          <a href="#" class="btn btn-orange px-4 fw-semibold">See More</a>
+          <a href="#" class="btn btn-outline-orange fw-semibold px-5">See More</a>
         </div>
 
         <!-- Right: Video Preview -->
@@ -547,34 +561,54 @@
 
         <!-- Left: Form -->
         <div class="col-lg-6">
-          <div class="newsletter-form-box p-5 rounded-4 shadow-sm">
-            <span class="section-badge">Stay Updated</span>
-            <h3 class="section-title mt-2 mb-1">Newsletter</h3>
-            <p class="text-muted mb-4">
-              Subscribe to get exclusive deals, travel tips,
-              and our latest tour packages delivered straight to your inbox.
-            </p>
+      <div class="newsletter-form-box p-4 rounded-4 shadow-sm">
 
-            <div class="mb-3">
-              <input
-                type="text"
-                class="form-control form-control-lg newsletter-input"
-                placeholder="Your Name"
-              />
-            </div>
-            <div class="mb-4">
-              <input
-                type="email"
-                class="form-control form-control-lg newsletter-input"
-                placeholder="Your Email"
-              />
-            </div>
-            <button class="btn btn-orange w-100 fw-semibold py-3 fs-6">
-              <i class="bi bi-send me-2"></i>Subscribe
-            </button>
+        <!-- Header row: title + region dropdown -->
+        <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-1">
+          <div>
+            <span class="section-badge">Stay Updated</span>
+            <h3 class="section-title mt-2 mb-0">Newsletter</h3>
           </div>
+          <select class="form-select search-select mt-1" id="regionSelect"
+            style="width:auto; min-width:130px; font-size:.8rem; padding:6px 10px;">
+            <option value="global"> Global</option>
+            <option value="asia"> Asia</option>
+            <option value="europe"> Europe</option>
+            <option value="americas"> Americas</option>
+            <option value="middleeast"> Middle East</option>
+            <option value="africa"> Africa</option>
+          </select>
         </div>
 
+        <p class="newsletter-carousel-text text-muted mb-3 mt-2" style="font-size:.9rem; min-height:2.8em; transition: opacity .3s ease;"></p>
+
+        <input type="hidden" id="selectedRegion" value="global" />
+
+        <div class="mb-3">
+          <input type="text" id="nlName"
+            class="form-control newsletter-input"
+            placeholder="Your Name" />
+        </div>
+        <div class="mb-3">
+          <input type="email" id="nlEmail"
+            class="form-control newsletter-input"
+            placeholder="Your Email" />
+        </div>
+
+      <button class="btn btn-outline-orange w-100 fw-semibold fs-6 subscribe-btn" id="subscribeBtn">
+          <img src="assests/images/logo.svg" alt=""
+          class="subscribe-logo me-2"
+          style="width:16px; height:16px; vertical-align:-2px;" />
+        Subscribe
+      </button>
+
+        <div class="subscribe-confirm mt-3 d-none text-center">
+          <i class="bi bi-check-circle-fill text-success me-1"></i>
+          <span class="small fw-semibold text-success" id="confirmMsg"></span>
+        </div>
+
+      </div>
+        </div>
         <!-- Right: Image with Badge -->
         <div class="col-lg-6">
           <div class="newsletter-img-wrap position-relative rounded-4 overflow-hidden">
@@ -592,6 +626,7 @@
           </div>
         </div>
 
+        
       </div>
     </div>
   </section>
@@ -609,7 +644,7 @@
           <!-- Logo -->
           <div class="footer-logo mb-3 d-flex align-items-center justify-content-center gap-2">
             <span class="logo-icon">
-              <img src="assests\images\customlogo.jpg" alt="Logo" style="width:32px; height:32px; object-fit:contain;" />
+              <img src="assests\images\logo.svg" alt="Logo" style="width:32px; height:32px; object-fit:contain;" />
             </span>
             <span class="fs-4 fw-bold">Hero <span class="text-orange">Travel</span></span>
           </div>

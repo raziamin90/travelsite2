@@ -104,6 +104,7 @@ ul {
   font-weight: 600;
   transition: var(--transition);
 }
+
 .btn-orange:hover,
 .btn-orange:focus {
   background-color: var(--orange-dark);
@@ -112,7 +113,24 @@ ul {
   transform: translateY(-2px);
   box-shadow: 0 6px 18px rgba(255,87,34,.35);
 }
-
+.btn-search {
+  background-color: transparent;
+  color: var(--white);
+  border: 2px solid var(--white);
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-size: .92rem;
+  font-weight: 600;
+  transition: var(--transition);
+}
+.btn-search:hover,
+.btn-search:focus {
+  background-color: var(--orange);
+  border-color: var(--orange);
+  color: var(--white);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(255,87,34,.35);
+}
 .btn-outline-orange {
   background-color: transparent;
   color: var(--orange);
@@ -130,6 +148,13 @@ ul {
   transform: translateY(-2px);
   box-shadow: 0 6px 18px rgba(255,87,34,.35);
 }
+.subscribe-btn {
+  padding: 10px 24px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 /* ---------------------------
    NAVBAR
@@ -138,7 +163,12 @@ ul {
   padding: 14px 0;
   transition: var(--transition);
 }
-
+.navbar.scrolled-nav {
+  padding: 8px 0;
+  box-shadow: 0 4px 20px rgba(0,0,0,.1) !important;
+  background: rgba(255,255,255,.98) !important;
+  backdrop-filter: blur(8px);
+}
 .logo-icon {
   font-size: 1.6rem;
   color: var(--orange);
@@ -254,7 +284,26 @@ ul {
 .tour-img-wrapper:hover img {
   transform: scale(1.02);
 }
+/* Tour Carousel */
+.tour-carousel-img {
+  height: 420px;
+  object-fit: cover;
+}
 
+/* Orange dot indicators */
+.carousel-indicators [data-bs-target] {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: rgba(255,255,255,.6);
+  border: none;
+  transition: var(--transition);
+}
+.carousel-indicators .active {
+  background-color: var(--orange);
+  width: 24px;
+  border-radius: 4px;
+}
 /* ---------------------------
    DESTINATION CARDS
 --------------------------- */
@@ -521,7 +570,33 @@ ul {
   font-size: .82rem;
   overflow: hidden;       /* ADD THIS — clips anything that bleeds out */
 }
+.regionSelect {
+  border: 1.5px solid #e8e8e8;
+  border-radius: 8px;
+  font-size: .9rem;
+  font-family: 'Poppins', sans-serif;
+  color: var(--text-dark);
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.regionSelect:focus {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px rgba(255,87,34,.12);
+  outline: none;
+}
 
+/* Logo tinted orange by default */
+.subscribe-logo {
+  filter: invert(45%) sepia(90%) saturate(500%) hue-rotate(340deg);
+  transition: filter .25s ease;
+}
+
+/* Logo turns white when button is hovered/filled */
+.subscribe-btn:hover .subscribe-logo,
+.subscribe-btn:focus .subscribe-logo {
+  filter: brightness(0) invert(1);
+}
 /* ---------------------------
    FOOTER
 --------------------------- */

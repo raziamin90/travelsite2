@@ -61,43 +61,143 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
 
-  /* ------------------------------------------
-     4. NEWSLETTER FORM — basic validation
-  ------------------------------------------ */
-  const subscribeBtn = document.querySelector('.newsletter-section .btn-orange');
+/* ------------------------------------------
+   4. NEWSLETTER — Region Carousel + Validation
+------------------------------------------ */
 
-  if (subscribeBtn) {
-    subscribeBtn.addEventListener('click', function () {
-      const inputs = document.querySelectorAll('.newsletter-section .newsletter-input');
-      let valid = true;
+const regionData = {
+  global: [
+    'Subscribe to get exclusive deals, travel tips, and our latest tour packages delivered straight to your inbox.',
+    'Get worldwide travel deals delivered to your inbox.',
+    'Discover featured destinations from every corner of the globe.',
+    'Be first to hear about our latest tour packages.',
+    'Exclusive travel tips from our expert guides.'
+  ],
+  asia:       [
+    'Exclusive deals for Maldives, Bali, and Kashmir.',
+    'Discover stunning beaches across Southeast Asia.',
+    'Hidden gems in Bangladesh, Sri Lanka, and beyond.',
+    'Best time-to-visit guides for Asian destinations.'
+  ],
+  europe:     [
+    'Best European getaways — Santorini, Paris, Amalfi.',
+    'Seasonal deals on Mediterranean cruises and tours.',
+    'Explore ancient cities and breathtaking coastlines.',
+    'Hand-picked boutique hotels across Europe.'
+  ],
+  americas:   [
+    'Discover hidden gems from the Rockies to Patagonia.',
+    'Adventure tours across North & South America.',
+    'Best national parks and road trip routes.',
+    'Exclusive deals on Caribbean island escapes.'
+  ],
+  middleeast: [
+    'Luxurious desert escapes and ancient city tours.',
+    'Breathtaking architecture and cultural experiences.',
+    'Best deals on Dubai, Jordan, and Oman packages.',
+    'Exclusive Ramadan and seasonal travel offers.'
+  ],
+  africa:     [
+    'Safari adventures across the African continent.',
+    'Coastal escapes and cultural experiences in Africa.',
+    'Best wildlife parks and conservation tour deals.',
+    'Discover Morocco, Kenya, Tanzania, and more.'
+  ]
+};
 
-      inputs.forEach(function (input) {
-        if (!input.value.trim()) {
-          input.style.borderColor = '#e74c3c';
-          valid = false;
-        } else {
-          input.style.borderColor = '#28a745';
-        }
-      });
+const regionSelect   = document.getElementById('regionSelect');
+const selectedInput  = document.getElementById('selectedRegion');
+const subscribeBtn   = document.getElementById('subscribeBtn');
+const nlName         = document.getElementById('nlName');
+const nlEmail        = document.getElementById('nlEmail');
+const confirmBox     = document.querySelector('.subscribe-confirm');
+const confirmMsg     = document.getElementById('confirmMsg');
+const carouselEl     = document.querySelector('.newsletter-carousel-text');
 
-      if (valid) {
-        subscribeBtn.textContent = '✓ Subscribed!';
-        subscribeBtn.style.backgroundColor = '#28a745';
-        subscribeBtn.style.borderColor     = '#28a745';
-        inputs.forEach(function (input) {
-          input.value = '';
-          input.style.borderColor = '#e5e5e5';
-        });
+let carouselIndex    = 0;
+let carouselRegion   = 'global';
+let carouselInterval = null;
 
-        setTimeout(function () {
-          subscribeBtn.innerHTML = '<i class="bi bi-send me-2"></i>Subscribe';
-          subscribeBtn.style.backgroundColor = '';
-          subscribeBtn.style.borderColor     = '';
-        }, 3000);
-      }
-    });
-  }
+function showCarouselText(region, index) {
+  if (!carouselEl) return;
+  const texts = regionData[region] || regionData['global'];
+  carouselEl.style.opacity = '0';
+  setTimeout(function () {
+    carouselEl.textContent   = texts[index % texts.length];
+    carouselEl.style.opacity = '1';
+  }, 300);
+}
 
+function startCarousel(region) {
+  carouselRegion = region;
+  carouselIndex  = 0;
+  if (carouselInterval) clearInterval(carouselInterval);
+  showCarouselText(carouselRegion, carouselIndex);
+  carouselInterval = setInterval(function () {
+    carouselIndex++;
+    showCarouselText(carouselRegion, carouselIndex);
+  }, 3000);
+}
+
+// Start on load with global
+startCarousel('global');
+
+// Update on region change
+if (regionSelect) {
+  regionSelect.addEventListener('change', function () {
+    const region = regionSelect.value;
+    if (selectedInput) selectedInput.value = region;
+    carouselIndex = 0;
+    startCarousel(region);
+  });
+}
+
+// Subscribe validation
+if (subscribeBtn) {
+  subscribeBtn.addEventListener('click', function () {
+    let valid = true;
+
+    if (!nlName || !nlName.value.trim()) {
+      if (nlName) nlName.style.borderColor = '#e74c3c';
+      valid = false;
+    } else {
+      nlName.style.borderColor = '#28a745';
+    }
+
+    if (!nlEmail || !nlEmail.value.trim() || !nlEmail.value.includes('@')) {
+      if (nlEmail) nlEmail.style.borderColor = '#e74c3c';
+      valid = false;
+    } else {
+      nlEmail.style.borderColor = '#28a745';
+    }
+
+    if (valid) {
+      const regionLabels = { global:'Global', asia:'Asia', europe:'Europe', americas:'Americas', middleeast:'Middle East', africa:'Africa' };
+      const label = regionLabels[carouselRegion] || 'Global';
+
+      subscribeBtn.innerHTML             = '<i class="bi bi-check-lg me-2"></i>Subscribed!';
+      subscribeBtn.style.backgroundColor = '#28a745';
+      subscribeBtn.style.borderColor     = '#28a745';
+      subscribeBtn.style.color           = '#fff';
+
+      if (confirmMsg) confirmMsg.textContent = 'You\'re subscribed to the ' + label + ' newsletter!';
+      if (confirmBox) confirmBox.classList.remove('d-none');
+
+      nlName.value  = '';
+      nlEmail.value = '';
+      nlName.style.borderColor  = '#e5e5e5';
+      nlEmail.style.borderColor = '#e5e5e5';
+
+      setTimeout(function () {
+        subscribeBtn.innerHTML = '<img src="assests/images/logo.svg" alt="" class="subscribe-logo me-2" style="width:16px; height:16px; vertical-align:-2px;" /> Subscribe';
+        subscribeBtn.style.backgroundColor = '';
+        subscribeBtn.style.borderColor     = '';
+        subscribeBtn.style.color           = '';
+        if (confirmBox) confirmBox.classList.add('d-none');
+      }, 4000);
+    }
+  });
+}
 
   /* ------------------------------------------
      5. DESTINATION CARD — simple ripple hint
