@@ -206,6 +206,7 @@
             <div class="carousel-indicators">
               <button type="button" data-bs-target="#tourCarousel" data-bs-slide-to="0" class="active"></button>
               <button type="button" data-bs-target="#tourCarousel" data-bs-slide-to="1"></button>
+              <button type="button" data-bs-target="#tourCarousel" data-bs-slide-to="2"></button>
             </div>
 
             <!-- Slides -->
@@ -216,7 +217,9 @@
               <div class="carousel-item">
                 <img src="assests\images\popular tours.jpg" class="d-block w-100 tour-carousel-img" />
               </div>          
-              
+              <div class="carousel-item">
+                <img src="assests\images\Rectangle-8.jpg" class="d-block w-100 tour-carousel-img" />
+              </div>              
             </div>
 
           </div>
@@ -248,7 +251,7 @@
       <div class="row g-4 mb-4">
         <div class="col-md-6">
           <div class="dest-card rounded-4 overflow-hidden" style="height:260px;">
-            <img src="assests\images\maldives.jpg" alt="Maldives" class="dest-img" />
+            <img src="assests\images\maldives.jpg" alt="Maldives" class="dest-img" loading="lazy" />
             <div class="dest-overlay">
               <h4 class="dest-name">Maldives</h4>
             </div>
@@ -256,7 +259,7 @@
         </div>
         <div class="col-md-6">
           <div class="dest-card rounded-4 overflow-hidden" style="height:260px;">
-            <img src="assests\images\indonesia.jpg" alt="Indonesia" class="dest-img" />
+            <img src="assests\images\indonesia.jpg" alt="Indonesia" class="dest-img" loading="lazy" />
             <div class="dest-overlay">
               <h4 class="dest-name">Indonesia</h4>
             </div>
@@ -268,7 +271,7 @@
       <div class="row g-4 mb-4">
         <div class="col-md-4">
           <div class="dest-card rounded-4 overflow-hidden" style="height:220px;">
-            <img src="assests\images\SriLanka.jpg" alt="Sri Lanka" class="dest-img" />
+            <img src="assests\images\SriLanka.jpg" alt="Sri Lanka" class="dest-img" loading="lazy" />
             <div class="dest-overlay">
               <h4 class="dest-name">Sri Lanka</h4>
             </div>
@@ -276,7 +279,7 @@
         </div>
         <div class="col-md-4">
           <div class="dest-card rounded-4 overflow-hidden" style="height:220px;">
-            <img src="assests\images\Rectangle-7.jpg" alt="North America" class="dest-img" />
+            <img src="assests\images\Rectangle-7.jpg" alt="North America" class="dest-img" loading="lazy" />
             <div class="dest-overlay">
               <h4 class="dest-name">North America</h4>
             </div>
@@ -284,7 +287,7 @@
         </div>
         <div class="col-md-4">
           <div class="dest-card rounded-4 overflow-hidden" style="height:220px;">
-            <img src="assests\images\Kashmir.jpg" alt="Kashmir" class="dest-img" />
+            <img src="assests\images\Kashmir.jpg" alt="Kashmir" class="dest-img" loading="lazy" />
             <div class="dest-overlay">
               <h4 class="dest-name">Kashmir</h4>
             </div>
@@ -296,7 +299,7 @@
       <div class="row g-4">
         <div class="col-md-6">
           <div class="dest-card rounded-4 overflow-hidden" style="height:260px;">
-            <img src="assests\images\bangladesh.jpg" alt="Bangladesh" class="dest-img" />
+            <img src="assests\images\bangladesh.jpg" alt="Bangladesh" class="dest-img" loading="lazy" />
             <div class="dest-overlay">
               <h4 class="dest-name">Bangladesh</h4>
             </div>
@@ -304,7 +307,7 @@
         </div>
         <div class="col-md-6">
           <div class="dest-card rounded-4 overflow-hidden" style="height:260px;">
-            <img src="assests\images\bandarban.jpg" alt="Bandarban" class="dest-img" />
+            <img src="assests\images\bandarban.jpg" alt="Bandarban" class="dest-img" loading="lazy" />
             <div class="dest-overlay">
               <h4 class="dest-name">Bandarban</h4>
             </div>
@@ -612,21 +615,40 @@
         <!-- Right: Image with Badge -->
         <div class="col-lg-6">
           <div class="newsletter-img-wrap position-relative rounded-4 overflow-hidden">
-            <img
-              src="assests\images\Rectangle-8.jpg"
-              alt="Travel Discount"
-              class="img-fluid w-100 rounded-4"
-              style="height:420px; object-fit:cover;"
-            />
-            <!-- Discount Badge -->
+
+            <!-- Carousel -->
+            <div id="newsletterCarousel" class="carousel slide rounded-4 shadow overflow-hidden" data-bs-ride="carousel" data-bs-interval="3000">
+
+              <!-- Indicators -->
+              <div class="carousel-indicators">
+                <button type="button" data-bs-target="#newsletterCarousel" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#newsletterCarousel" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#newsletterCarousel" data-bs-slide-to="2"></button>
+              </div>
+
+              <!-- Slides -->
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img src="assests\images\Rectangle-4.jpg" class="d-block w-100 tour-carousel-img" style="height:420px; object-fit:cover;" />
+                </div>
+                <div class="carousel-item">
+                  <img src="assests\images\popular tours.jpg" class="d-block w-100 tour-carousel-img" style="height:420px; object-fit:cover;" />
+                </div>
+                <div class="carousel-item">
+                  <img src="assests\images\Rectangle-8.jpg" class="d-block w-100 tour-carousel-img" style="height:420px; object-fit:cover;" />
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Discount Badge (overlays on top of carousel) -->
             <div class="discount-badge">
               <span class="d-block small fw-bold" style="font-size:.7rem;">Tours from</span>
               <span class="fw-bold lh-1" style="font-size:1.3rem;">Save up<br>to 70%</span>
             </div>
+
           </div>
         </div>
-
-        
       </div>
     </div>
   </section>
@@ -685,11 +707,12 @@
 
   <!-- Bootstrap 5 JS -->
   <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer
   ></script>
 
   <!-- Custom JS -->
-  <script src="js/script.js"></script>
+  <script src="js/script.js" defer ></script>
+
 
 </body>
 </html>
