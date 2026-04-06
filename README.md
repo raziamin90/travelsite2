@@ -22,49 +22,43 @@ A responsive travel agency landing page built with HTML, CSS, and vanilla JavaSc
 
 ## Project Structure
 ```
-hero-travel/
+travelsite2/
 ├── index.html
+├── profile.html
+├── contact.html
 ├── css/
-│   └── style.css
+│   ├── style.css
+│   ├── Settings.css
+│   └── contact.css
 ├── js/
-│   └── script.js
-└── assests/
-    └── images/
-        ├── logo.svg
-        ├── Rectangle-1.jpg         # Hero background
-        ├── Rectangle-4.jpg         # Carousel slide 1
-        ├── popular tours.jpg        # Carousel slide 2
-        ├── Rectangle-8.jpg          # Carousel slide 3 / Newsletter
-        ├── maldives.jpg
-        ├── indonesia.jpg
-        ├── SriLanka.jpg
-        ├── Rectangle-7.jpg          # North America
-        ├── Kashmir.jpg
-        ├── bangladesh.jpg
-        ├── bandarban.jpg
-        ├── Rectangle-122.jpg        # Deal card 1 (Santorini)
-        ├── Rectangle-12.jpg         # Deal card 2 (Bali)
-        ├── satorini1.jpg            # Deal card 3 (Santorini)
-        ├── videoiamge.jpg           # Video section preview
-        ├── hotel.png                # Why Choose Us icon
-        ├── map.png                  # Why Choose Us icon
-        └── price-tag.png            # Why Choose Us icon
+│   ├── script.js
+│   ├── Settings.js
+│   └── contact.js
+├── assests/
+│   └── images/
+│       ├── logo.svg
+│       ├── Rectangle-1.jpg
+│       ├── Rectangle-4.jpg
+│       └── ... (other images)
+└── .gitignore
 ```
 
 ---
 
 ## Sections
-| Section | Description |
-|---|---|
-| **Navbar** | Sticky with scroll shadow effect and active link highlight. Auto-closes on mobile. |
-| **Hero** | Full background image with search bar — destination, month, and trip type filters with validation |
-| **Popular Tours** | Auto-sliding Bootstrap carousel with feature checklist |
-| **Destinations** | Masonry-style destination card grid with click-to-open detail modals |
-| **Why Choose Us** | Three feature cards — Hotels, Service, Price Guarantee |
-| **Deals & Discounts** | Full-bleed image cards with frosted glass overlay and booking modal |
-| **Video** | Preview image with YouTube embed modal player |
-| **Newsletter** | Region-based rotating text carousel with subscribe form validation |
-| **Footer** | Social links and copyright |
+| Section                      | Description                                                                                           |
+| ---------------------------- | ----------------------------------------------------------------------------------------------------- |
+| **Navbar**                   | Sticky with scroll shadow and active link highlight. Auto-closes on mobile.                           |
+| **Hero**                     | Full background image with search bar — filters for destination, month, and trip type with validation |
+| **Popular Tours**            | Auto-sliding Bootstrap carousel with feature checklist                                                |
+| **Destinations**             | Masonry-style destination cards with click-to-open detail modals                                      |
+| **Why Choose Us**            | Feature cards — Hotels, Service, Price Guarantee                                                      |
+| **Deals & Discounts**        | Full-bleed image cards with frosted glass overlay and booking modal                                   |
+| **Video**                    | Preview image with YouTube embed modal player                                                         |
+| **Newsletter**               | Region-based rotating text carousel with subscribe form validation                                    |
+| **Profile & Theme Settings** | Users can change website theme (Light, Dark, System)                                                  |
+| **Footer**                   | Social links and copyright                                                                            |
+
 
 ---
 
@@ -81,6 +75,8 @@ hero-travel/
 10. Scroll-to-top button fades in after 400px scroll
 11. Section fade-in animation on scroll using IntersectionObserver
 12. Toast notification system (success / error / info)
+13. Theme toggle: Change between Light, Dark, or System Default from the profile page
+14. Cookie storage: Saves theme preference across sessions (consent handling TBD)
 
 ---
 
