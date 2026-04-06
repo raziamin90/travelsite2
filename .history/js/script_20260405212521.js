@@ -27,27 +27,23 @@ function deleteCookie(name) {
     name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
 }
 
+/* ============================================================
+   DARK MODE — Apply saved theme BEFORE page renders
+   ✅ PLACED HERE: Outside DOMContentLoaded so dark mode
+   is applied instantly (no flash of white before JS runs).
+   [COOKIE FEATURE 3 — NEW ADDITION]
+============================================================ */
+(function applyThemeEarly() {
+  if (getCookie("ht_theme") === "dark") {
+    document.body.classList.add("ht-dark-mode");
+  }
+})();
+
 
 /* ============================================================
    DOMContentLoaded — all existing + new code lives here
 ============================================================ */
 document.addEventListener("DOMContentLoaded", function () {
-
-  /* ============================================================
-     THEME APPLY ON LOAD
-     Reads localStorage and applies both dark-mode classes so
-     style.css (body.ht-dark-mode) and settings.css (html.dark-mode)
-     rules both fire correctly on every page without a flash.
-  ============================================================ */
-  (function () {
-    var theme = localStorage.getItem("ht_theme_pref") || "system";
-    var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    var shouldBeDark = (theme === "dark") || (theme === "system" && prefersDark);
-    document.documentElement.classList.toggle("dark-mode", shouldBeDark);
-    document.body.classList.toggle("ht-dark-mode", shouldBeDark);
-    // Remove the inline background set by the init script now that CSS takes over
-    document.documentElement.style.background = "";
-  })();
 
   /* ============================================================
      COOKIE FEATURE 1 — COOKIE CONSENT BANNER
@@ -94,6 +90,37 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  /* ============================================================
+     COOKIE FEATURE 3 — DARK MODE TOGGLE BUTTON
+     ✅ PLACED: Top of DOMContentLoaded, after consent banner.
+     Injects a moon/sun button into the navbar.
+     [NEW ADDITION]
+  ============================================================ */
+  const mainNavContainer = document.querySelector(".navbar .container");
+  if (mainNavContainer) {
+    const themeToggleBtn = document.createElement("button");
+    themeToggleBtn.id = "ht-theme-toggle";
+    themeToggleBtn.setAttribute("aria-label", "Toggle dark mode");
+    themeToggleBtn.title = "Toggle Dark / Light Mode";
+    // Show correct icon based on current saved theme
+    themeToggleBtn.innerHTML = document.body.classList.contains("ht-dark-mode")
+      ? '<i class="bi bi-sun-fill"></i>'
+      : '<i class="bi bi-moon-fill"></i>';
+    mainNavContainer.appendChild(themeToggleBtn);
+
+    themeToggleBtn.addEventListener("click", function () {
+      const isDark = document.body.classList.toggle("ht-dark-mode");
+      setCookie("ht_theme", isDark ? "dark" : "light", 365);
+      themeToggleBtn.innerHTML = isDark
+        ? '<i class="bi bi-sun-fill"></i>'
+        : '<i class="bi bi-moon-fill"></i>';
+      showToast(
+        isDark ? "🌙 Dark mode enabled" : "☀️ Light mode enabled",
+        "info",
+        2500
+      );
+    });
+  }
 
   /* ============================================================
      1. STICKY NAVBAR — add shadow on scroll

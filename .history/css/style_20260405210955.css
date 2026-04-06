@@ -771,6 +771,32 @@ ul {
 }
 
 /* ---------------------------
+   DARK MODE TOGGLE BUTTON
+--------------------------- */
+#ht-theme-toggle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #eee;
+  background: var(--white);
+  color: var(--text-dark);
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: var(--transition);
+  flex-shrink: 0;
+}
+#ht-theme-toggle:hover {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: #fff;
+  transform: rotate(20deg) scale(1.08);
+}
+
+/* ---------------------------
    DARK MODE STYLES
    Applied when <body> has .ht-dark-mode
 --------------------------- */

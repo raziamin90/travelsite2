@@ -34,22 +34,6 @@ function deleteCookie(name) {
 document.addEventListener("DOMContentLoaded", function () {
 
   /* ============================================================
-     THEME APPLY ON LOAD
-     Reads localStorage and applies both dark-mode classes so
-     style.css (body.ht-dark-mode) and settings.css (html.dark-mode)
-     rules both fire correctly on every page without a flash.
-  ============================================================ */
-  (function () {
-    var theme = localStorage.getItem("ht_theme_pref") || "system";
-    var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    var shouldBeDark = (theme === "dark") || (theme === "system" && prefersDark);
-    document.documentElement.classList.toggle("dark-mode", shouldBeDark);
-    document.body.classList.toggle("ht-dark-mode", shouldBeDark);
-    // Remove the inline background set by the init script now that CSS takes over
-    document.documentElement.style.background = "";
-  })();
-
-  /* ============================================================
      COOKIE FEATURE 1 — COOKIE CONSENT BANNER
      ✅ PLACED: Very top of DOMContentLoaded, runs first.
      Shows a slide-up banner on first visit only.

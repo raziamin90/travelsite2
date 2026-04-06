@@ -27,17 +27,6 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css" />
-    <!-- THEME INIT — must run before first paint to prevent white flash -->
-    <script>
-      (function () {
-        var theme = localStorage.getItem("ht_theme_pref") || "system";
-        var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        if (theme === "dark" || (theme === "system" && prefersDark)) {
-          document.documentElement.classList.add("dark-mode");
-          document.documentElement.style.background = "#121212";
-        }
-      })();
-    </script>
   </head>
   <body>
     <!-- =========================================
@@ -78,17 +67,24 @@
         <div class="collapse navbar-collapse justify-content-end" id="mainNav">
           <ul class="navbar-nav gap-lg-2 mt-3 mt-lg-0">
             <li class="nav-item">
-              <a class="nav-link active fw-semibold text-orange" href="#">Home</a></li>
+              <a class="nav-link active fw-semibold text-orange" href="#"
+                >Home</a
+              >
+            </li>
             <li class="nav-item">
-              <a class="nav-link fw-semibold" href="#packages">Packages</a></li>
+              <a class="nav-link fw-semibold" href="#packages">Packages</a>
+            </li>
             <li class="nav-item">
-              <a class="nav-link fw-semibold" href="#testimonial">Testimonial</a></li>
+              <a class="nav-link fw-semibold" href="#testimonial"
+                >Testimonial</a
+              >
+            </li>
             <li class="nav-item">
-              <a class="nav-link fw-semibold" href="#blog">Blog</a></li>
+              <a class="nav-link fw-semibold" href="#blog">Blog</a>
+            </li>
             <li class="nav-item">
-              <a class="nav-link fw-semibold" href="contact.html">Contact</a></li>
-            <li class="nav-item">
-              <a class="nav-link fw-semibold" href="profile.html">Profile</a></li>
+              <a class="nav-link fw-semibold" href="contact.html">Contact</a>
+            </li>
           </ul>
         </div>
       </div>
