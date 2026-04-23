@@ -1,4 +1,4 @@
-                                                                                                                                                                                               <!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -27,24 +27,74 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css" />
-    <!-- THEME INIT — must run before first paint to prevent white flash -->
-    <script>
-      (function () {
-        var theme = localStorage.getItem("ht_theme_pref") || "system";
-        var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        if (theme === "dark" || (theme === "system" && prefersDark)) {
-          document.documentElement.classList.add("dark-mode");
-          document.documentElement.style.background = "#121212";
-        }
-      })();
-    </script>
-
   </head>
   <body>
     <!-- =========================================
-       NAVBAR
+  NAVBAR
   ========================================= -->
-      <div id="ht-navbar-root"></div>
+    <nav
+      class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm"
+    >
+      <div class="container">
+        <!-- Logo -->
+        <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+          <span class="logo-icon">
+            <img
+              src="assets\images\logo.svg"
+              alt="Logo"
+              style="width: 32px; height: 32px; object-fit: contain"
+            />
+          </span>
+          <span class="logo-text"
+            >Hero <span class="text-orange">Travel</span></span
+          >
+        </a>
+
+        <!-- Hamburger Toggle -->
+        <button
+          class="navbar-toggler border-0"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#mainNav"
+          aria-controls="mainNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Nav Links -->
+        <div class="collapse navbar-collapse justify-content-end" id="mainNav">
+          <ul class="navbar-nav gap-lg-2 mt-3 mt-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active fw-semibold text-orange" href="#"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" href="#packages">Packages</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" href="#testimonial"
+                >Testimonial</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" href="#blog">Blog</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" href="contact.html">Contact</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" href="profile.html">
+                <i class="bi bi-gear-fill me-1"></i>Profile
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- END NAVBAR -->
 
     <!-- =========================================
        HERO SECTION
@@ -928,8 +978,6 @@
     ></script>
 
     <!-- Custom JS -->
-  
-    <script src="js/navbar.js" defer></script>
     <script src="js/script.js" defer></script>
   </body>
 </html>

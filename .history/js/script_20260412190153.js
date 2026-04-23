@@ -50,36 +50,6 @@ document.addEventListener("DOMContentLoaded", function () {
   })();
 
   /* ============================================================
-     TOAST SYSTEM — defined first so every caller below is safe.
-     showToast(message, type, duration)
-     type: "success" | "error" | "info"  (default: "info")
-  ============================================================ */
-  const toastContainer = (function () {
-    let el = document.getElementById("ht-toast-container");
-    if (!el) {
-      el = document.createElement("div");
-      el.id = "ht-toast-container";
-      document.body.appendChild(el);
-    }
-    return el;
-  })();
-
-  function showToast(message, type, duration) {
-    type     = type     || "info";
-    duration = duration || 3200;
-    const icons = { success: "✅", error: "❌", info: "✈️" };
-    const toast = document.createElement("div");
-    toast.className = "ht-toast " + type;
-    toast.innerHTML =
-      "<span>" + (icons[type] || "") + "</span><span>" + message + "</span>";
-    toastContainer.appendChild(toast);
-    setTimeout(function () {
-      toast.classList.add("fadeout");
-      toast.addEventListener("animationend", function () { toast.remove(); }, { once: true });
-    }, duration);
-  }
-
-  /* ============================================================
      COOKIE FEATURE 1 — COOKIE CONSENT BANNER
      ✅ PLACED: Very top of DOMContentLoaded, runs first.
      Shows a slide-up banner on first visit only.
@@ -301,7 +271,7 @@ document.addEventListener("DOMContentLoaded", function () {
         nlEmail.style.borderColor = "#e5e5e5";
         setTimeout(function () {
           subscribeBtn.innerHTML =
-            '<img src="assests/images/logo.svg" alt="" class="subscribe-logo me-2" style="width:16px;height:16px;vertical-align:-2px;" /> Subscribe';
+            '<img src="assets/images/logo.svg" alt="" class="subscribe-logo me-2" style="width:16px;height:16px;vertical-align:-2px;" /> Subscribe';
           subscribeBtn.style.cssText = "";
           if (confirmBox) confirmBox.classList.add("d-none");
         }, 4000);
@@ -492,6 +462,41 @@ document.addEventListener("DOMContentLoaded", function () {
     .ht-toast.fadeout { animation: htSlideOut .35s ease forwards; }
   `;
   document.head.appendChild(shakeStyle);
+
+  /* ============================================================
+     8. TOAST HELPER
+     ✅ UNCHANGED — original code
+     NOTE: Cookie features above call showToast() — this
+     definition must stay here (above cookie toast calls that
+     run on timers, which fire after DOMContentLoaded completes).
+  ============================================================ */
+  let toastContainer = document.getElementById("ht-toast-container");
+  if (!toastContainer) {
+    toastContainer = document.createElement("div");
+    toastContainer.id = "ht-toast-container";
+    document.body.appendChild(toastContainer);
+  }
+
+  function showToast(message, type, duration) {
+    type = type || "info";
+    duration = duration || 3200;
+    const icons = { success: "✅", error: "❌", info: "✈️" };
+    const toast = document.createElement("div");
+    toast.className = "ht-toast " + type;
+    toast.innerHTML =
+      "<span>" + (icons[type] || "") + "</span><span>" + message + "</span>";
+    toastContainer.appendChild(toast);
+    setTimeout(function () {
+      toast.classList.add("fadeout");
+      toast.addEventListener(
+        "animationend",
+        function () {
+          toast.remove();
+        },
+        { once: true }
+      );
+    }, duration);
+  }
 
   /* ============================================================
      9. DESTINATION CARD MODAL
@@ -1011,7 +1016,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 src="${dest.img}"
                 alt="${dest.name}"
                 class="dest-img"
-                onerror="this.src='assests/images/Rectangle-4.jpg'"
+                onerror="this.src='assets/images/Rectangle-4.jpg'"
               />
               <div class="dest-overlay">
                 <h5 class="dest-name mb-0">${dest.name}</h5>

@@ -10,9 +10,20 @@ document.addEventListener("DOMContentLoaded", function () {
      HELPER — show a toast using the shared showToast()
      from script.js. Falls back to alert if not loaded.
   ============================================================ */
-// REPLACE every call to toast(...) with showToast(...) directly:
-showToast("Please fix the highlighted fields.", "error");
-
+  function toast(msg, type) {
+    if (typeof showToast === "function") {
+      showToast(msg, type || "info", 3200);
+    } else {
+      // Fallback: inject a minimal toast if script.js hasn't loaded
+      var t = document.createElement("div");
+      t.style.cssText = "position:fixed;bottom:90px;right:24px;background:#FF5722;color:#fff;" +
+        "padding:13px 20px;border-radius:12px;font-family:'Poppins',sans-serif;" +
+        "font-size:.88rem;z-index:9999;box-shadow:0 6px 20px rgba(0,0,0,.18);";
+      t.textContent = msg;
+      document.body.appendChild(t);
+      setTimeout(function () { t.remove(); }, 3200);
+    }
+  }
 
   /* ============================================================
      1. SIDEBAR NAVIGATION — switch active panel

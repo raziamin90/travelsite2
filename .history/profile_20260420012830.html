@@ -35,6 +35,15 @@
       }
     })();
   </script>
+  <!-- AUTH GUARD -->
+  <script>
+    (function () {
+      try {
+        var user = JSON.parse(localStorage.getItem("ht_auth_user") || "null");
+        if (!user || !user.loggedIn) { window.location.replace("auth.html"); }
+      } catch (e) { window.location.replace("auth.html"); }
+    })();
+  </script>
 </head>
 
 <body>

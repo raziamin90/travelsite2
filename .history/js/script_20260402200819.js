@@ -1,133 +1,10 @@
 /* =============================================
-   HERO TRAVEL — script.js  (with Cookie Features)
+   HERO TRAVEL — script.js  (upgraded)
 ============================================= */
 
-/* ============================================================
-   COOKIE HELPERS
-   ✅ PLACED HERE: Outside DOMContentLoaded so they are
-   available globally across the entire file.
-   [COOKIE FEATURE — NEW ADDITION]
-============================================================ */
-function setCookie(name, value, days) {
-  const expires = new Date(Date.now() + days * 864e5).toUTCString();
-  document.cookie =
-    name + "=" + encodeURIComponent(value) +
-    "; expires=" + expires + "; path=/";
-}
-
-function getCookie(name) {
-  return document.cookie.split("; ").reduce(function (acc, pair) {
-    const parts = pair.split("=");
-    return parts[0] === name ? decodeURIComponent(parts[1]) : acc;
-  }, null);
-}
-
-function deleteCookie(name) {
-  document.cookie =
-    name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
-}
-
-
-/* ============================================================
-   DOMContentLoaded — all existing + new code lives here
-============================================================ */
 document.addEventListener("DOMContentLoaded", function () {
-
-  /* ============================================================
-     THEME APPLY ON LOAD
-     Reads localStorage and applies both dark-mode classes so
-     style.css (body.ht-dark-mode) and settings.css (html.dark-mode)
-     rules both fire correctly on every page without a flash.
-  ============================================================ */
-  (function () {
-    var theme = localStorage.getItem("ht_theme_pref") || "system";
-    var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    var shouldBeDark = (theme === "dark") || (theme === "system" && prefersDark);
-    document.documentElement.classList.toggle("dark-mode", shouldBeDark);
-    document.body.classList.toggle("ht-dark-mode", shouldBeDark);
-    // Remove the inline background set by the init script now that CSS takes over
-    document.documentElement.style.background = "";
-  })();
-
-  /* ============================================================
-     TOAST SYSTEM — defined first so every caller below is safe.
-     showToast(message, type, duration)
-     type: "success" | "error" | "info"  (default: "info")
-  ============================================================ */
-  const toastContainer = (function () {
-    let el = document.getElementById("ht-toast-container");
-    if (!el) {
-      el = document.createElement("div");
-      el.id = "ht-toast-container";
-      document.body.appendChild(el);
-    }
-    return el;
-  })();
-
-  function showToast(message, type, duration) {
-    type     = type     || "info";
-    duration = duration || 3200;
-    const icons = { success: "✅", error: "❌", info: "✈️" };
-    const toast = document.createElement("div");
-    toast.className = "ht-toast " + type;
-    toast.innerHTML =
-      "<span>" + (icons[type] || "") + "</span><span>" + message + "</span>";
-    toastContainer.appendChild(toast);
-    setTimeout(function () {
-      toast.classList.add("fadeout");
-      toast.addEventListener("animationend", function () { toast.remove(); }, { once: true });
-    }, duration);
-  }
-
-  /* ============================================================
-     COOKIE FEATURE 1 — COOKIE CONSENT BANNER
-     ✅ PLACED: Very top of DOMContentLoaded, runs first.
-     Shows a slide-up banner on first visit only.
-     Stores "accepted" or "declined" in cookie for 365/30 days.
-     [NEW ADDITION]
-  ============================================================ */
-  if (!getCookie("ht_cookie_consent")) {
-
-    const consentBanner = document.createElement("div");
-    consentBanner.id = "ht-cookie-banner";
-    consentBanner.innerHTML = `
-      <div class="ht-cookie-inner">
-        <span class="ht-cookie-icon">🍪</span>
-        <p class="ht-cookie-text">
-          This site uses cookies to improve your experience and remember your preferences.
-        </p>
-        <div class="ht-cookie-btns">
-          <button id="ht-cookie-accept" class="ht-cookie-btn ht-cookie-btn-accept">Accept</button>
-          <button id="ht-cookie-decline" class="ht-cookie-btn ht-cookie-btn-decline">Decline</button>
-        </div>
-      </div>
-    `;
-    document.body.appendChild(consentBanner);
-
-    // Slide it up after 1.2s so the page loads first
-    setTimeout(function () {
-      consentBanner.classList.add("ht-cookie-visible");
-    }, 1200);
-
-    document.getElementById("ht-cookie-accept").addEventListener("click", function () {
-      setCookie("ht_cookie_consent", "accepted", 365);
-      consentBanner.classList.remove("ht-cookie-visible");
-      setTimeout(function () { consentBanner.remove(); }, 500);
-      showToast("Cookies accepted. Enjoy your experience! 🍪", "success", 3000);
-    });
-
-    document.getElementById("ht-cookie-decline").addEventListener("click", function () {
-      setCookie("ht_cookie_consent", "declined", 30);
-      consentBanner.classList.remove("ht-cookie-visible");
-      setTimeout(function () { consentBanner.remove(); }, 500);
-      showToast("Cookies declined. Some features may be limited.", "info", 3000);
-    });
-  }
-
-
   /* ============================================================
      1. STICKY NAVBAR — add shadow on scroll
-     ✅ UNCHANGED — original code
   ============================================================ */
   const navbar = document.querySelector(".navbar");
 
@@ -137,7 +14,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   /* ============================================================
      2. SMOOTH ACTIVE LINK HIGHLIGHT
-     ✅ UNCHANGED — original code
   ============================================================ */
   const sections = document.querySelectorAll("section[id]");
   const navLinks = document.querySelectorAll(".navbar-nav .nav-link");
@@ -160,7 +36,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   /* ============================================================
      3. CLOSE MOBILE NAVBAR ON LINK CLICK
-     ✅ UNCHANGED — original code
   ============================================================ */
   navLinks.forEach(function (link) {
     link.addEventListener("click", function () {
@@ -174,7 +49,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   /* ============================================================
      4. NEWSLETTER — Region Carousel + Validation
-     ✅ UNCHANGED — original code
   ============================================================ */
   const regionData = {
     global: [
@@ -301,7 +175,7 @@ document.addEventListener("DOMContentLoaded", function () {
         nlEmail.style.borderColor = "#e5e5e5";
         setTimeout(function () {
           subscribeBtn.innerHTML =
-            '<img src="assests/images/logo.svg" alt="" class="subscribe-logo me-2" style="width:16px;height:16px;vertical-align:-2px;" /> Subscribe';
+            '<img src="assets/images/logo.svg" alt="" class="subscribe-logo me-2" style="width:16px;height:16px;vertical-align:-2px;" /> Subscribe';
           subscribeBtn.style.cssText = "";
           if (confirmBox) confirmBox.classList.add("d-none");
         }, 4000);
@@ -311,15 +185,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   /* ============================================================
      5. DESTINATION CARD CURSOR
-     ✅ UNCHANGED — original code
   ============================================================ */
   document.querySelectorAll(".dest-card").forEach(function (card) {
     card.style.cursor = "pointer";
   });
 
   /* ============================================================
-     6. SCROLL-TO-TOP BUTTON
-     ✅ UNCHANGED — original code
+     6. SCROLL-TO-TOP BUTTON  ← NEW
   ============================================================ */
   const scrollTopBtn = document.createElement("button");
   scrollTopBtn.id = "scrollTopBtn";
@@ -362,19 +234,19 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   /* ============================================================
-     7. SEARCH BAR VALIDATION
-     ✅ UNCHANGED — original code
+     7. SEARCH BAR VALIDATION  ← NEW
   ============================================================ */
   const searchBtn = document.querySelector(".btn-search");
   if (searchBtn) {
     searchBtn.addEventListener("click", function () {
       const selects = document.querySelectorAll(
-        ".hero-search-bar .search-select"
+        ".hero-search-bar .search-select",
       );
       let allFilled = true;
 
       selects.forEach(function (sel) {
         if (!sel.value || sel.selectedIndex === 0) {
+          // shake + red border
           sel.style.borderColor = "#e74c3c";
           sel.style.animation = "htShake .4s ease";
           sel.addEventListener(
@@ -382,7 +254,7 @@ document.addEventListener("DOMContentLoaded", function () {
             function () {
               sel.style.animation = "";
             },
-            { once: true }
+            { once: true },
           );
           allFilled = false;
         } else {
@@ -391,7 +263,9 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
       if (allFilled) {
+        // Success toast
         showToast("🔍 Searching for your perfect trip…", "success");
+        // Reset borders after a moment
         setTimeout(function () {
           selects.forEach(function (sel) {
             sel.style.borderColor = "";
@@ -403,7 +277,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Inject animation keyframes + modal styles
+  // Inject shake keyframe once
   const shakeStyle = document.createElement("style");
   shakeStyle.textContent = `
     @keyframes htShake {
@@ -421,6 +295,7 @@ document.addEventListener("DOMContentLoaded", function () {
       from { opacity:1; transform:translateX(0); }
       to   { opacity:0; transform:translateX(40px); }
     }
+    /* Destination modal backdrop */
     .ht-modal-backdrop {
       position:fixed; inset:0; background:rgba(0,0,0,.7);
       z-index:10000; display:flex; align-items:center;
@@ -450,6 +325,8 @@ document.addEventListener("DOMContentLoaded", function () {
       transition:background .2s;
     }
     .ht-modal-close:hover { background:rgba(255,87,34,.85); }
+
+    /* Booking form modal */
     .ht-book-modal {
       background:#fff; border-radius:20px; overflow:hidden;
       max-width:480px; width:100%; padding:36px;
@@ -474,6 +351,7 @@ document.addEventListener("DOMContentLoaded", function () {
       display:block; font-size:.82rem; font-weight:600;
       color:#555; margin-bottom:4px;
     }
+    /* Toast */
     #ht-toast-container {
       position:fixed; bottom:90px; right:24px;
       z-index:9999; display:flex; flex-direction:column; gap:10px;
@@ -494,9 +372,38 @@ document.addEventListener("DOMContentLoaded", function () {
   document.head.appendChild(shakeStyle);
 
   /* ============================================================
-     9. DESTINATION CARD MODAL
-     ✅ destInfo object and modal functions UNCHANGED.
-     Only the click listener block has cookie code added.
+     8. TOAST HELPER  ← NEW
+  ============================================================ */
+  let toastContainer = document.getElementById("ht-toast-container");
+  if (!toastContainer) {
+    toastContainer = document.createElement("div");
+    toastContainer.id = "ht-toast-container";
+    document.body.appendChild(toastContainer);
+  }
+
+  function showToast(message, type, duration) {
+    type = type || "info";
+    duration = duration || 3200;
+    const icons = { success: "✅", error: "❌", info: "✈️" };
+    const toast = document.createElement("div");
+    toast.className = "ht-toast " + type;
+    toast.innerHTML =
+      "<span>" + (icons[type] || "") + "</span><span>" + message + "</span>";
+    toastContainer.appendChild(toast);
+    setTimeout(function () {
+      toast.classList.add("fadeout");
+      toast.addEventListener(
+        "animationend",
+        function () {
+          toast.remove();
+        },
+        { once: true },
+      );
+    }, duration);
+  }
+
+  /* ============================================================
+     9. DESTINATION CARD MODAL  ← NEW
   ============================================================ */
   const destInfo = {
     Maldives: {
@@ -619,6 +526,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.body.appendChild(backdrop);
     document.body.style.overflow = "hidden";
 
+    // Close handlers
     backdrop
       .querySelector(".ht-modal-close")
       .addEventListener("click", function () {
@@ -628,6 +536,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (e.target === backdrop) closeModal(backdrop);
     });
 
+    // Book Now inside dest modal opens booking modal
     backdrop
       .querySelector(".btn-book-now")
       .addEventListener("click", function () {
@@ -644,62 +553,22 @@ document.addEventListener("DOMContentLoaded", function () {
         el.remove();
         document.body.style.overflow = "";
       },
-      { once: true }
+      { once: true },
     );
   }
 
-  /* ---------------------------------------------------------------
-     Destination card click listener
-     ✅ MODIFIED: Cookie Features 2 & 4 added inside the click handler.
-     All other behaviour (openDestModal call) is unchanged.
-  --------------------------------------------------------------- */
+  // Attach click listeners to destination cards
   document.querySelectorAll(".dest-card").forEach(function (card) {
     card.addEventListener("click", function () {
       const nameEl = card.querySelector(".dest-name");
-      const imgEl  = card.querySelector(".dest-img");
-      if (!nameEl || !imgEl) return;
-
-      const destName = nameEl.textContent.trim();
-      const destSrc  = imgEl.src;
-
-      /* --------------------------------------------------------
-         COOKIE FEATURE 2 — REMEMBER SELECTED DESTINATION
-         Saves the last clicked destination name into a cookie.
-         On next page load a welcome-back toast will appear.
-         [NEW ADDITION]
-      -------------------------------------------------------- */
-      setCookie("ht_last_dest", destName, 30);
-
-      /* --------------------------------------------------------
-         COOKIE FEATURE 4 — RECENTLY VIEWED DESTINATIONS
-         Reads existing list → removes duplicate → prepends new
-         item → trims to max 3 → saves back to cookie → refreshes
-         the Recently Viewed section on the page.
-         [NEW ADDITION]
-      -------------------------------------------------------- */
-      const recentRaw  = getCookie("ht_recent_dests");
-      let recentList   = recentRaw ? JSON.parse(recentRaw) : [];
-
-      // Remove duplicate entry for this destination (if any)
-      recentList = recentList.filter(function (d) {
-        return d.name !== destName;
-      });
-      // Add to front of list
-      recentList.unshift({ name: destName, img: destSrc });
-      // Keep only latest 3
-      if (recentList.length > 3) recentList.pop();
-
-      setCookie("ht_recent_dests", JSON.stringify(recentList), 30);
-      renderRecentlyViewed(); // Refresh the section immediately
-
-      // Open the destination info modal (original behaviour — unchanged)
-      openDestModal(destName, destSrc);
+      const imgEl = card.querySelector(".dest-img");
+      if (nameEl && imgEl) openDestModal(nameEl.textContent.trim(), imgEl.src);
     });
   });
 
   /* ============================================================
-     10. BOOKING FORM MODAL
-     ✅ UNCHANGED — original code
+    10. BOOKING FORM MODAL  ← NEW
+        Triggered by "Book Now" in deal cards AND dest modals
   ============================================================ */
   function openBookingModal(presetDestination) {
     presetDestination = presetDestination || "";
@@ -779,6 +648,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.body.appendChild(backdrop);
     document.body.style.overflow = "hidden";
 
+    // Close
     backdrop
       .querySelector(".ht-modal-close")
       .addEventListener("click", function () {
@@ -788,6 +658,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (e.target === backdrop) closeModal(backdrop);
     });
 
+    // Submit
     backdrop.querySelector("#bk-submit").addEventListener("click", function () {
       const fields = [
         {
@@ -840,7 +711,7 @@ document.addEventListener("DOMContentLoaded", function () {
             function () {
               el.style.animation = "";
             },
-            { once: true }
+            { once: true },
           );
           valid = false;
         } else {
@@ -858,7 +729,7 @@ document.addEventListener("DOMContentLoaded", function () {
         showToast(
           "✈️ Booking request for " + dest + " received!",
           "success",
-          4000
+          4000,
         );
         setTimeout(function () {
           closeModal(backdrop);
@@ -880,15 +751,14 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   /* ============================================================
-     11. SMOOTH SCROLL for all anchor links
-     ✅ UNCHANGED — original code
+    11. SMOOTH SCROLL for all anchor links  ← NEW
   ============================================================ */
   document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
     anchor.addEventListener("click", function (e) {
       const target = document.querySelector(this.getAttribute("href"));
       if (target) {
         e.preventDefault();
-        const offset = 75;
+        const offset = 75; // navbar height
         const top =
           target.getBoundingClientRect().top + window.scrollY - offset;
         window.scrollTo({ top: top, behavior: "smooth" });
@@ -897,8 +767,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   /* ============================================================
-     12. SECTION FADE-IN ON SCROLL
-     ✅ UNCHANGED — original code
+    12. SECTION FADE-IN ON SCROLL  ← NEW (lightweight)
   ============================================================ */
   const fadeStyle = document.createElement("style");
   fadeStyle.textContent = `
@@ -907,9 +776,10 @@ document.addEventListener("DOMContentLoaded", function () {
   `;
   document.head.appendChild(fadeStyle);
 
+  // Apply to section children
   document
     .querySelectorAll(
-      ".section-padding > .container > .row, .section-padding > .container > .text-center"
+      ".section-padding > .container > .row, .section-padding > .container > .text-center",
     )
     .forEach(function (el, i) {
       el.classList.add("ht-fade");
@@ -925,7 +795,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
     },
-    { threshold: 0.12 }
+    { threshold: 0.12 },
   );
 
   document.querySelectorAll(".ht-fade").forEach(function (el) {
@@ -933,8 +803,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   /* ============================================================
-     13. "See All Packages" toast
-     ✅ UNCHANGED — original code
+    13. DEAL CARD "See All Packages" — scroll to deals  ← NEW
   ============================================================ */
   document.querySelectorAll('a[href="#"]').forEach(function (link) {
     if (link.textContent.trim() === "See All Packages") {
@@ -943,15 +812,14 @@ document.addEventListener("DOMContentLoaded", function () {
         showToast(
           "All packages coming soon! Subscribe for early access.",
           "info",
-          3500
+          3500,
         );
       });
     }
   });
 
   /* ============================================================
-     14. "See More" button toast
-     ✅ UNCHANGED — original code
+    14. NAVBAR "Read More" / "See More" links — toast  ← NEW
   ============================================================ */
   document.querySelectorAll(".btn-outline-orange").forEach(function (btn) {
     if (btn.textContent.trim() === "See More") {
@@ -961,150 +829,5 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
   });
-
-  /* ============================================================
-     COOKIE FEATURE 2 — WELCOME BACK MESSAGE
-     ✅ PLACED: Near the bottom of DOMContentLoaded so
-     showToast() is already defined before this runs.
-     On reload, if last destination cookie exists → show toast.
-     [NEW ADDITION]
-  ============================================================ */
-  const lastDest = getCookie("ht_last_dest");
-  if (lastDest) {
-    setTimeout(function () {
-      showToast("Welcome back! ✈️ Explore " + lastDest + " again", "info", 4000);
-    }, 1800); // Delay so page fully loads before toast appears
-  }
-
-  /* ============================================================
-     COOKIE FEATURE 4 — RECENTLY VIEWED SECTION RENDERER
-     ✅ PLACED: Bottom of DOMContentLoaded.
-     Reads cookie data and populates the #ht-recently-viewed
-     section that you added to index.html.
-     [NEW ADDITION]
-  ============================================================ */
-  function renderRecentlyViewed() {
-    const section = document.getElementById("ht-recently-viewed");
-    const grid    = document.getElementById("ht-rv-grid");
-    if (!section || !grid) return; // Safely exit if section not in page
-
-    const recentRaw  = getCookie("ht_recent_dests");
-    const recentList = recentRaw ? JSON.parse(recentRaw) : [];
-
-    if (recentList.length === 0) {
-      section.style.display = "none";
-      return;
-    }
-
-    section.style.display = "block";
-
-    // Build cards for each recently viewed destination
-    grid.innerHTML = recentList
-      .map(function (dest) {
-        return `
-          <div class="col-md-4">
-            <div class="dest-card rv-card rounded-4 overflow-hidden"
-                 style="height:180px; cursor:pointer;"
-                 data-name="${dest.name}"
-                 data-img="${dest.img}">
-              <img
-                src="${dest.img}"
-                alt="${dest.name}"
-                class="dest-img"
-                onerror="this.src='assests/images/Rectangle-4.jpg'"
-              />
-              <div class="dest-overlay">
-                <h5 class="dest-name mb-0">${dest.name}</h5>
-              </div>
-            </div>
-          </div>
-        `;
-      })
-      .join("");
-
-    // Re-attach click listeners to the freshly rendered cards
-    grid.querySelectorAll(".rv-card").forEach(function (card) {
-      card.addEventListener("click", function () {
-        const name = card.dataset.name;
-        const img  = card.dataset.img;
-        // Update last-dest cookie when clicked from recently viewed
-        setCookie("ht_last_dest", name, 30);
-        openDestModal(name, img);
-      });
-    });
-  }
-
-  // Run once on page load to restore previously viewed destinations
-  renderRecentlyViewed();
-  /* NAV AUTH LINK — show username + logout when logged in */
-  (function () {
-    var authItem = document.getElementById("nav-auth-item");
-    var authLink = document.getElementById("nav-auth-link");
-    if (!authItem) return;
-
-    var user = null;
-    try { user = JSON.parse(localStorage.getItem("ht_auth_user") || "null"); } catch (e) {}
-
-    if (user && user.loggedIn) {
-      var displayName = user.name
-        ? user.name.split(" ")[0]
-        : (user.email ? user.email.split("@")[0] : "Account");
-
-      authItem.innerHTML = `
-        <div class="nav-user-wrap dropdown">
-          <button class="nav-user-btn dropdown-toggle" type="button"
-            data-bs-toggle="dropdown" aria-expanded="false">
-            <span class="nav-user-avatar"><i class="bi bi-person-circle"></i></span>
-            <span class="nav-user-name">${displayName}</span>
-          </button>
-          <ul class="dropdown-menu dropdown-menu-end nav-user-dropdown shadow-sm">
-            <li>
-              <a class="dropdown-item" href="profile.html">
-                <i class="bi bi-gear me-2 text-orange"></i>Settings
-              </a>
-            </li>
-            <li><hr class="dropdown-divider" /></li>
-            <li>
-              <button class="dropdown-item text-danger" id="nav-logout-btn">
-                <i class="bi bi-box-arrow-right me-2"></i>Logout
-              </button>
-            </li>
-          </ul>
-        </div>`;
-
-      if (!document.getElementById("ht-nav-user-style")) {
-        var s = document.createElement("style");
-        s.id = "ht-nav-user-style";
-        s.textContent = `
-          .nav-user-btn { display:flex; align-items:center; gap:7px; background:none;
-            border:1.5px solid #FF5722; border-radius:30px; padding:5px 14px 5px 8px;
-            font-family:'Poppins',sans-serif; font-size:.88rem; font-weight:600;
-            color:#FF5722; cursor:pointer; transition:all .22s ease; }
-          .nav-user-btn:hover,.nav-user-btn.show { background:#FF5722; color:#fff; }
-          .nav-user-btn::after { display:none; }
-          .nav-user-avatar { font-size:1.25rem; line-height:1; }
-          .nav-user-name { max-width:90px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-          .nav-user-dropdown { border:1.5px solid #f0f0f0; border-radius:14px; padding:8px;
-            min-width:160px; font-family:'Poppins',sans-serif; }
-          .nav-user-dropdown .dropdown-item { border-radius:8px; font-size:.88rem;
-            font-weight:500; padding:9px 14px; transition:background .18s; }
-          .nav-user-dropdown .dropdown-item:hover { background:#fff3ef; }
-          html.dark-mode .nav-user-dropdown { background:#1e1e1e; border-color:#2c2c2c; }
-          html.dark-mode .nav-user-dropdown .dropdown-item { color:#ddd; }
-          html.dark-mode .nav-user-dropdown .dropdown-item:hover { background:#2a2a2a; }
-        `;
-        document.head.appendChild(s);
-      }
-
-      var logoutBtn = document.getElementById("nav-logout-btn");
-      if (logoutBtn) {
-        logoutBtn.addEventListener("click", function () {
-          try { localStorage.removeItem("ht_auth_user"); } catch (e) {}
-          showToast("👋 Logged out. See you soon!", "info", 2500);
-          setTimeout(function () { window.location.href = "auth.html"; }, 1000);
-        });
-      }
-    }
-  })();
-
-}); // ← END DOMContentLoaded
+}); // END DOMContentLoaded
+//

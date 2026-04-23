@@ -38,13 +38,21 @@
         }
       })();
     </script>
-
+    <!-- AUTH GUARD -->
+    <script>
+      (function () {
+        try {
+          var user = JSON.parse(localStorage.getItem("ht_auth_user") || "null");
+          if (!user || !user.loggedIn) { window.location.replace("auth.html"); }
+        } catch (e) { window.location.replace("auth.html"); }
+      })();
+    </script>
   </head>
   <body>
     <!-- =========================================
        NAVBAR
   ========================================= -->
-      <div id="ht-navbar-root"></div>
+      <div id="navbar.html"></div>
 
     <!-- =========================================
        HERO SECTION
@@ -928,8 +936,6 @@
     ></script>
 
     <!-- Custom JS -->
-  
-    <script src="js/navbar.js" defer></script>
     <script src="js/script.js" defer></script>
   </body>
 </html>
